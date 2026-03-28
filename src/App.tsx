@@ -100,87 +100,89 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-bg text-ink font-sans selection:bg-nust-blue/10">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-blue-100">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white border-b border-line px-4 py-3">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-nust-blue rounded-none flex items-center justify-center text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,0.1)]">
-              <GraduationCap size={28} />
+      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 py-4">
+        <div className="max-w-3xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+              <GraduationCap size={24} />
             </div>
             <div>
-              <h1 className="text-lg font-bold uppercase tracking-tighter text-nust-blue leading-none">NUST Admissions</h1>
-              <div className="flex items-center gap-2 mt-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Data Terminal v1.2</p>
-                <div className="h-1 w-1 bg-line rounded-full"></div>
+              <h1 className="text-xl font-bold tracking-tight text-slate-900">NUST Admissions</h1>
+              <div className="flex items-center gap-2">
+                <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Offline Assistant v1.1</p>
+                <div className="h-1 w-1 bg-slate-300 rounded-full"></div>
                 {isOnline ? (
-                  <div className="flex items-center gap-1 text-[9px] font-bold text-emerald-600 uppercase tracking-widest">
-                    <Wifi size={10} /> Sync: Online
+                  <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-600 uppercase tracking-tight">
+                    <Wifi size={10} /> Live Sync Active
                   </div>
                 ) : (
-                  <div className="flex items-center gap-1 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                    <WifiOff size={10} /> Sync: Offline
+                  <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-tight">
+                    <WifiOff size={10} /> Offline Mode
                   </div>
                 )}
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {isOnline && (
               <button 
                 onClick={handleSync}
                 disabled={isSyncing}
-                className={`p-2 border border-line hover:bg-slate-50 transition-all ${isSyncing ? 'animate-spin' : ''}`}
+                className={`p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all ${isSyncing ? 'animate-spin' : ''}`}
                 title="Sync Latest Data"
               >
-                <RefreshCw size={16} />
+                <RefreshCw size={18} />
               </button>
             )}
             {messages.length > 0 && (
               <button 
                 onClick={clearChat}
-                className="p-2 border border-line text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
                 title="Clear Chat"
               >
-                <Trash2 size={18} />
+                <Trash2 size={20} />
               </button>
             )}
           </div>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 py-8 pb-32 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-        <div className="space-y-8">
-          {messages.length === 0 ? (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="py-12 border border-dashed border-line rounded-none bg-white/50"
-            >
-              <div className="text-center max-w-md mx-auto px-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 border-2 border-nust-blue text-nust-blue mb-6">
-                  <ShieldCheck size={32} />
-                </div>
-                <h2 className="text-xl font-bold uppercase tracking-tight text-ink mb-2">System Initialized</h2>
-                <p className="text-sm text-slate-500 mb-8 font-medium">
-                  Query the NUST Undergraduate Admissions Database. All responses are derived from verified 2025-26 policy data.
-                </p>
+      <main className="max-w-3xl mx-auto px-4 py-8 pb-32">
+        {messages.length === 0 ? (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-12"
+          >
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-50 text-blue-600 rounded-full mb-6">
+              <ShieldCheck size={32} />
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">How can I assist you today?</h2>
+            <p className="text-slate-500 mb-6 max-w-md mx-auto">
+              I am a reliable, offline-first admissions officer for NUST Islamabad. I provide factual data without guessing.
+            </p>
 
-                <div className="grid grid-cols-1 gap-2">
-                  {QUICK_QUESTIONS.map((q, i) => (
-                    <button
-                      key={i}
-                      onClick={() => handleSearch(q)}
-                      className="text-left p-3 bg-white border border-line hover:border-nust-blue hover:bg-nust-blue/5 transition-all group flex items-center justify-between"
-                    >
-                      <p className="text-xs font-bold text-slate-600 group-hover:text-nust-blue uppercase tracking-wide">{q}</p>
-                      <Send size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-nust-blue" />
-                    </button>
-                  ))}
-                </div>
+            {lastSync && (
+              <div className="mb-10 inline-flex items-center gap-2 px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                <RefreshCw size={10} /> Last Synced: {new Date(lastSync).toLocaleString()}
               </div>
-            </motion.div>
-          ) : (
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto">
+              {QUICK_QUESTIONS.map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSearch(q)}
+                  className="text-left p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-400 hover:bg-blue-50/30 transition-all group"
+                >
+                  <p className="text-sm font-medium text-slate-700 group-hover:text-blue-700">{q}</p>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        ) : (
           <div className="space-y-6">
             <AnimatePresence mode="popLayout">
               {messages.map((msg) => (
@@ -192,40 +194,36 @@ export default function App() {
                 >
                   {/* User Query */}
                   <div className="flex justify-end">
-                    <div className="bg-ink text-white px-4 py-2 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] max-w-[80%]">
-                      <p className="text-xs font-mono uppercase tracking-wide opacity-50 mb-1">User Query</p>
-                      <p className="text-sm font-medium">{msg.query}</p>
+                    <div className="bg-blue-600 text-white px-4 py-2 rounded-2xl rounded-tr-none max-w-[80%] shadow-md">
+                      <p className="text-sm">{msg.query}</p>
                     </div>
                   </div>
 
                   {/* Assistant Response */}
                   <div className="flex justify-start">
-                    <div className="bg-white border border-line rounded-none p-5 max-w-[95%] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)] space-y-4 relative overflow-hidden">
-                      <div className="absolute top-0 left-0 w-1 h-full bg-nust-blue"></div>
+                    <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-5 max-w-[90%] shadow-sm space-y-4">
                       <div className="flex items-start justify-between gap-4">
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-nust-blue animate-pulse"></div>
-                            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Response Data</span>
-                          </div>
-                          <p className="text-sm font-bold text-ink leading-relaxed">
+                        <div className="space-y-1">
+                          <p className="text-sm font-bold text-slate-900 leading-relaxed">
                             {msg.response.directAnswer}
                           </p>
-                          <p className="text-sm text-slate-600 leading-relaxed border-l-2 border-slate-100 pl-4 italic">
-                            {msg.response.supportingDetail}
-                          </p>
+                          {msg.response.supportingDetail && (
+                            <p className="text-sm text-slate-600 leading-relaxed">
+                              {msg.response.supportingDetail}
+                            </p>
+                          )}
                         </div>
-                        <div className={`shrink-0 px-2 py-1 border font-mono text-[9px] font-bold uppercase tracking-widest ${getConfidenceColor(msg.response.confidence)}`}>
-                          CONF: {msg.response.confidence}
+                        <div className={`shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${getConfidenceColor(msg.response.confidence)}`}>
+                          {msg.response.confidence}
                         </div>
                       </div>
 
-                      <div className="pt-3 border-t border-line flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                        <div className="flex items-center gap-2">
-                          <Info size={12} className="text-nust-blue" />
-                          <span>SRC: {msg.response.source}</span>
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                        <div className="flex items-center gap-1.5">
+                          <Info size={12} />
+                          <span>Source: {msg.response.source}</span>
                         </div>
-                        <span className="font-mono">{msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+                        <span>{msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                       </div>
                     </div>
                   </div>
@@ -248,176 +246,162 @@ export default function App() {
             )}
           </div>
         )}
-        </div>
-
-        {/* Sidebar/Quick Info */}
-        <aside className="hidden lg:block space-y-6">
-          <div className="terminal-card p-4">
-            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-              <MapPin size={14} className="text-nust-blue" /> Campus Nodes
-            </h3>
-            <ul className="space-y-3 text-xs font-bold text-ink uppercase tracking-tight">
-              <li className="flex items-center gap-2 border-b border-slate-50 pb-2">
-                <span className="w-1 h-1 bg-nust-blue"></span> H-12, Islamabad
-              </li>
-              <li className="flex items-center gap-2 border-b border-slate-50 pb-2">
-                <span className="w-1 h-1 bg-nust-blue"></span> Risalpur
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1 h-1 bg-nust-blue"></span> Quetta
-              </li>
-            </ul>
-          </div>
-
-          <div className="terminal-card p-4">
-            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-              <GraduationCap size={14} className="text-nust-blue" /> Financial Aid
-            </h3>
-            <div className="space-y-4">
-              {syncedData?.scholarships ? (
-                syncedData.scholarships.slice(0, 3).map((s, i) => (
-                  <div key={i} className="space-y-1 border-l-2 border-nust-blue/20 pl-3">
-                    <p className="text-[10px] font-bold text-ink uppercase">{s.name}</p>
-                    <p className="text-[10px] text-slate-500 line-clamp-2 leading-relaxed">{s.details}</p>
-                  </div>
-                ))
-              ) : (
-                <p className="text-[10px] text-slate-400 italic font-mono uppercase">NO_DATA: SYNC_REQUIRED</p>
-              )}
-            </div>
-          </div>
-
-          <div className="terminal-card p-4">
-            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-              <Calculator size={14} className="text-nust-blue" /> Merit Processor
-            </h3>
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">NET_SCORE (MAX 200)</label>
-                <input 
-                  type="number" 
-                  placeholder="000"
-                  className="w-full bg-slate-50 border border-line rounded-none py-2 px-3 text-xs font-mono focus:outline-none focus:border-nust-blue"
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    if (!isNaN(val)) setCalcNet(val);
-                  }}
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">HSSC_MARKS (MAX 1100)</label>
-                <input 
-                  type="number" 
-                  placeholder="0000"
-                  className="w-full bg-slate-50 border border-line rounded-none py-2 px-3 text-xs font-mono focus:outline-none focus:border-nust-blue"
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    if (!isNaN(val)) setCalcFsc(val);
-                  }}
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">SSC_MARKS (MAX 1100)</label>
-                <input 
-                  type="number" 
-                  placeholder="0000"
-                  className="w-full bg-slate-50 border border-line rounded-none py-2 px-3 text-xs font-mono focus:outline-none focus:border-nust-blue"
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    if (!isNaN(val)) setCalcMatric(val);
-                  }}
-                />
-              </div>
-              {calcNet > 0 && calcFsc > 0 && calcMatric > 0 && (
-                <div className="pt-3 mt-2 border-t border-line bg-nust-blue/5 p-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-bold text-slate-500 uppercase">AGGREGATE:</span>
-                    <span className="text-lg font-bold text-nust-blue font-mono">
-                      {(((calcNet / 200) * 75) + ((calcFsc / 1100) * 15) + ((calcMatric / 1100) * 10)).toFixed(2)}%
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="terminal-card p-4">
-            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-              <CreditCard size={14} className="text-nust-blue" /> Weightage Matrix
-            </h3>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <div className="flex justify-between text-[10px] font-bold uppercase">
-                  <span className="text-slate-500">NET (Entry Test)</span>
-                  <span className="text-nust-blue">75%</span>
-                </div>
-                <div className="w-full bg-slate-100 h-1 rounded-none overflow-hidden">
-                  <div className="bg-nust-blue h-full w-[75%]"></div>
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="flex justify-between text-[10px] font-bold uppercase">
-                  <span className="text-slate-500">HSSC (Inter)</span>
-                  <span className="text-nust-blue">15%</span>
-                </div>
-                <div className="w-full bg-slate-100 h-1 rounded-none overflow-hidden">
-                  <div className="bg-nust-blue/60 h-full w-[15%]"></div>
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="flex justify-between text-[10px] font-bold uppercase">
-                  <span className="text-slate-500">SSC (Matric)</span>
-                  <span className="text-nust-blue">10%</span>
-                </div>
-                <div className="w-full bg-slate-100 h-1 rounded-none overflow-hidden">
-                  <div className="bg-nust-blue/30 h-full w-[10%]"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
       </main>
 
       {/* Input Area */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-line p-4 z-20">
-        <div className="max-w-5xl mx-auto">
+      <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-slate-200 p-4">
+        <div className="max-w-3xl mx-auto">
           <form 
             onSubmit={(e) => { e.preventDefault(); handleSearch(); }}
-            className="relative flex items-center gap-3"
+            className="relative flex items-center gap-2"
           >
             <div className="relative flex-1">
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="ENTER QUERY (E.G. ELIGIBILITY, FEES, MERIT)..."
-                className="w-full bg-slate-50 border border-line rounded-none py-4 pl-4 pr-12 text-xs font-mono uppercase tracking-wider focus:outline-none focus:ring-0 focus:border-nust-blue transition-all placeholder:text-slate-300"
+                placeholder="Ask about eligibility, fees, deadlines..."
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300">
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
                 <Search size={18} />
               </div>
             </div>
             <button
               type="submit"
               disabled={!query.trim() || isTyping}
-              className="bg-nust-blue text-white px-6 py-4 rounded-none hover:bg-ink disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] font-bold uppercase tracking-widest text-xs"
+              className="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-200"
             >
               <Send size={18} />
             </button>
           </form>
-          <div className="flex items-center justify-between mt-3">
-            <p className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.3em]">
-              {isOnline ? "CONNECTION: ESTABLISHED // SOURCE: NUST.EDU.PK" : "CONNECTION: LOCAL // SOURCE: ENCRYPTED_CACHE"}
-            </p>
-            {lastSync && (
-              <p className="text-[9px] text-slate-400 font-mono uppercase">
-                LAST_SYNC: {new Date(lastSync).toISOString()}
-              </p>
-            )}
-          </div>
+          <p className="text-[10px] text-center text-slate-400 mt-3 font-medium uppercase tracking-widest">
+            {isOnline ? "Live Sync Active • Updates from nust.edu.pk" : "100% Offline • No Data Leaves This Device"}
+          </p>
         </div>
       </div>
 
+      {/* Sidebar/Quick Info (Desktop Only) */}
+      <div className="hidden lg:block fixed left-8 top-32 w-64 space-y-4">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+            <MapPin size={14} /> Campus Info
+          </h3>
+          <ul className="space-y-3 text-sm font-medium text-slate-600">
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> H-12, Islamabad</li>
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> Risalpur</li>
+            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> Quetta</li>
+          </ul>
+        </div>
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+            <GraduationCap size={14} /> Scholarships
+          </h3>
+          <div className="space-y-3">
+            {syncedData?.scholarships ? (
+              syncedData.scholarships.slice(0, 3).map((s, i) => (
+                <div key={i} className="space-y-1">
+                  <p className="text-xs font-bold text-slate-700">{s.name}</p>
+                  <p className="text-[10px] text-slate-500 line-clamp-2">{s.details}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-xs text-slate-400 italic">Sync to see latest scholarships</p>
+            )}
+          </div>
+        </div>
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+            <MapPin size={14} /> Campus Life
+          </h3>
+          <div className="space-y-3">
+            {syncedData?.campusLife ? (
+              syncedData.campusLife.slice(0, 3).map((c, i) => (
+                <div key={i} className="space-y-1">
+                  <p className="text-xs font-bold text-slate-700">{c.category}</p>
+                  <p className="text-[10px] text-slate-500 line-clamp-2">{c.description}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-xs text-slate-400 italic">Sync to see campus highlights</p>
+            )}
+          </div>
+        </div>
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+            <Calculator size={14} /> Merit Calculator
+          </h3>
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-slate-400 uppercase">NET Score (Max 200)</label>
+              <input 
+                type="number" 
+                placeholder="e.g. 150"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                onChange={(e) => {
+                  const val = parseInt(e.target.value);
+                  if (!isNaN(val)) setCalcNet(val);
+                }}
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-slate-400 uppercase">FSc Marks (Max 1100)</label>
+              <input 
+                type="number" 
+                placeholder="e.g. 980"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                onChange={(e) => {
+                  const val = parseInt(e.target.value);
+                  if (!isNaN(val)) setCalcFsc(val);
+                }}
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-slate-400 uppercase">Matric Marks (Max 1100)</label>
+              <input 
+                type="number" 
+                placeholder="e.g. 1020"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                onChange={(e) => {
+                  const val = parseInt(e.target.value);
+                  if (!isNaN(val)) setCalcMatric(val);
+                }}
+              />
+            </div>
+            {calcNet > 0 && calcFsc > 0 && calcMatric > 0 && (
+              <div className="pt-2 mt-2 border-t border-slate-100">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-bold text-slate-500">Aggregate:</span>
+                  <span className="text-sm font-bold text-blue-600">
+                    {(((calcNet / 200) * 75) + ((calcFsc / 1100) * 15) + ((calcMatric / 1100) * 10)).toFixed(2)}%
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+            <Calculator size={14} /> Merit Weightage
+          </h3>
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs font-bold">
+              <span className="text-slate-500">NET</span>
+              <span className="text-blue-600">75%</span>
+            </div>
+            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+              <div className="bg-blue-600 h-full w-[75%]"></div>
+            </div>
+            <div className="flex justify-between text-xs font-bold pt-1">
+              <span className="text-slate-500">HSSC</span>
+              <span className="text-blue-600">15%</span>
+            </div>
+            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+              <div className="bg-blue-400 h-full w-[15%]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -6,6 +6,15 @@ export interface NustData {
   deadlines: Deadline[];
   merit: MeritCalculation;
   general: GeneralInfo[];
+  faqs: FAQ[];
+}
+
+export interface FAQ {
+  question: string;
+  answer: string;
+  category: string;
+  confidence: "High" | "Medium" | "Low";
+  source: string;
 }
 
 export interface Program {
@@ -234,6 +243,253 @@ export const nustData: NustData = {
       info: "Masters: Full tuition for 4 semesters (2 years). Bench fee + course fee applies after 2 years. PhD: Full tuition for 6 semesters (3 years). Bench fee applies thereafter until completion.",
       keywords: ["masters", "ms", "phd", "postgraduate", "bench fee", "duration"],
       source: "NUST Postgraduate Fee Structure"
+    }
+  ],
+  faqs: [
+    {
+      question: "Are there any quota / reserved seats?",
+      answer: "There are no quota seats.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Are there reserved seats for MBBS?",
+      answer: "Admissions in NSHS are purely on merit based on MDCAT conducted by NUMS.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can a candidate apply for both open merit and ACT-based seats?",
+      answer: "Yes, using NET/MDCAT and ACT scores.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can ICS students apply for engineering?",
+      answer: "Yes, but they must complete Chemistry as a remedial subject in the first semester.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can Pre-Medical students apply for engineering?",
+      answer: "Yes, but they must pass additional mathematics and have at least 60% marks at the time of joining.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can Pre-Medical students apply for BS Computer Science?",
+      answer: "Yes, but they must complete deficient math courses within one year.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can arts/humanities students apply for computing programs?",
+      answer: "Yes, if they have Mathematics as a subject.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can I apply for more than one program?",
+      answer: "Yes, if eligibility criteria are met.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Is there any age limit?",
+      answer: "No, there is no age limit.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Is less than 60% in FSC Part-1 allowed?",
+      answer: "Yes, but 60% overall is required at the time of joining.",
+      category: "Admissions & Eligibility",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Who qualifies as an expatriate student?",
+      answer: "Someone living abroad with Pakistani passport or dual nationality.",
+      category: "International / Expat Students",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can foreign students apply?",
+      answer: "Yes, based on NET, ACT, SAT, or MDCAT depending on program.",
+      category: "International / Expat Students",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can foreign students apply for MBBS?",
+      answer: "Yes, using NUMS MDCAT, SAT-II, or equivalent tests.",
+      category: "International / Expat Students",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Born Pakistani with foreign passport?",
+      answer: "Apply as international unless you have Pakistani nationality (CNIC/NICOP).",
+      category: "International / Expat Students",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "How can I apply?",
+      answer: "Apply online via NUST admission portal.",
+      category: "Application Process",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can I apply manually?",
+      answer: "No, only online applications are accepted.",
+      category: "Application Process",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "What documents are required?",
+      answer: "CNIC/Form B/NICOP required initially; documents verified later.",
+      category: "Application Process",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can I recheck entry test result?",
+      answer: "Yes, within 5 days with a fee of Rs. 500.",
+      category: "Application Process",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can I get a copy of my test result?",
+      answer: "Yes, via the NUST website.",
+      category: "Application Process",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Is there financial assistance?",
+      answer: "Yes, for students maintaining GPA ≥ 3.5.",
+      category: "Fees & Financial Aid",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can fees be paid in installments?",
+      answer: "Yes: quarterly, semi-annual, or annual (discounts available).",
+      category: "Fees & Financial Aid",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Is admission fee refundable?",
+      answer: "No, only security deposit is refundable.",
+      category: "Fees & Financial Aid",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "How often are fees revised?",
+      answer: "Usually once per year.",
+      category: "Fees & Financial Aid",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Is there negative marking?",
+      answer: "No.",
+      category: "Entry Test (NET)",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Test format?",
+      answer: "200 MCQs in 3 hours.",
+      category: "Entry Test (NET)",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can I retake NET if missed?",
+      answer: "No, except in extreme emergencies.",
+      category: "Entry Test (NET)",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "When is result announced?",
+      answer: "Computer-based: within 24 hours\nPaper-based: 5–7 days",
+      category: "Entry Test (NET)",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can I choose between multiple selections?",
+      answer: "Yes, you can retain one seat of your choice.",
+      category: "Merit & Selection",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Are gap year students penalized?",
+      answer: "No.",
+      category: "Merit & Selection",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Migration allowed?",
+      answer: "Yes, after first year (with strong academic record).",
+      category: "Merit & Selection",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Is transport available?",
+      answer: "Yes, for Islamabad/Rawalpindi with extra charges.",
+      category: "Campus & Facilities",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Is hostel available for MBBS students?",
+      answer: "Yes, for both boys and girls.",
+      category: "Campus & Facilities",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Is there any name mismatch issue (CNIC vs documents)?",
+      answer: "Name must match Matric/O-level certificate; update CNIC/passport.",
+      category: "Miscellaneous",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Can I update preferences after applying?",
+      answer: "Yes, before selection process starts.",
+      category: "Miscellaneous",
+      confidence: "High",
+      source: "NUST FAQ 2025"
+    },
+    {
+      question: "Who to contact for queries?",
+      answer: "Phone: +92-51-90856878, Email: ugadmissions@nust.edu.pk",
+      category: "Miscellaneous",
+      confidence: "High",
+      source: "NUST FAQ 2025"
     }
   ]
 };

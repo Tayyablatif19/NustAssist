@@ -1,6 +1,6 @@
 import { nustData, Program, EligibilityRule, TestInfo, Deadline, GeneralInfo } from "../data/nust_data";
 
-export type Intent = "ELIGIBILITY" | "FEES" | "DEADLINES" | "PROGRAMS" | "TESTS" | "MERIT" | "GENERAL" | "UNKNOWN";
+export type Intent = "ELIGIBILITY" | "FEES" | "DEADLINES" | "PROGRAMS" | "TESTS" | "MERIT" | "GENERAL" | "FAQ" | "UNKNOWN";
 
 export interface AssistantResponse {
   directAnswer: string;
@@ -42,6 +42,7 @@ export class AssistantLogic {
       PROGRAMS: ["programs", "courses", "degrees", "majors", "offered", "departments", "engineering", "computing", "business"],
       TESTS: ["net", "test", "sat", "entry test", "exam", "subjects", "weightage", "series"],
       GENERAL: ["hostel", "scholarship", "accommodation", "financial aid", "campus", "location", "sports", "clubs", "facilities", "life"],
+      FAQ: ["quota", "reserved", "ics", "pre-medical", "arts", "humanities", "age limit", "expatriate", "foreign", "manual", "documents", "recheck", "copy", "installments", "negative marking", "format", "retake", "missed", "gap year", "migration", "transport", "mismatch"],
       UNKNOWN: []
     };
 
@@ -52,6 +53,60 @@ export class AssistantLogic {
     }
 
     return "UNKNOWN";
+  }
+
+  private static handleFAQs(query: string): AssistantResponse | null {
+    const normalized = this.normalize(query);
+    
+    // 1. Check for exact or near-exact phrase matches first (Highest Priority)
+    for (const faq of nustData.faqs) {
+      const normalizedQuestion = this.normalize(faq.question);
+      if (normalized === normalizedQuestion || normalized.includes(normalizedQuestion) || normalizedQuestion.includes(normalized)) {
+        return {
+          directAnswer: faq.answer,
+          supportingDetail: "",
+          confidence: "High",
+          source: faq.source
+        };
+      }
+    }
+
+    // 2. Semantic-like matching based on meaningful word overlap
+    let bestMatch = null;
+    let bestScore = 0;
+
+    const stopWords = ["is", "are", "the", "a", "an", "can", "i", "do", "there", "any", "for", "in", "on", "at", "to", "with", "how", "what", "who", "when", "where", "of", "about", "any", "it", "my", "your"];
+    const queryWords = normalized.split(" ").filter(w => !stopWords.includes(w) && w.length > 2);
+    
+    if (queryWords.length === 0) return null;
+
+    for (const faq of nustData.faqs) {
+      const questionWords = this.normalize(faq.question).split(" ").filter(w => !stopWords.includes(w) && w.length > 2);
+      if (questionWords.length === 0) continue;
+
+      const overlap = queryWords.filter(w => questionWords.includes(w)).length;
+      
+      // Score is Jaccard-like: intersection / union of meaningful words
+      const union = new Set([...queryWords, ...questionWords]).size;
+      const score = overlap / union;
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = faq;
+      }
+    }
+
+    // Strict threshold: Require high semantic overlap
+    if (bestMatch && bestScore >= 0.5) {
+      return {
+        directAnswer: bestMatch.answer,
+        supportingDetail: "",
+        confidence: bestScore >= 0.7 ? "High" : "Medium",
+        source: bestMatch.source
+      };
+    }
+
+    return null;
   }
 
   public static processQuery(query: string): AssistantResponse {
@@ -89,6 +144,12 @@ export class AssistantLogic {
 
     const intent = this.classifyIntent(query);
 
+    // Try to find a direct FAQ match first for better precision
+    const faqMatch = this.handleFAQs(normalized);
+    if (faqMatch) {
+      return faqMatch;
+    }
+
     switch (intent) {
       case "ELIGIBILITY":
         return this.handleEligibility(normalized);
@@ -104,10 +165,17 @@ export class AssistantLogic {
         return this.handleMerit(normalized);
       case "GENERAL":
         return this.handleGeneral(normalized);
+      case "FAQ":
+        return faqMatch || {
+          directAnswer: "I don’t have verified offline data for this question.",
+          supportingDetail: "",
+          confidence: "Low",
+          source: "NUST FAQ"
+        };
       default:
         return {
           directAnswer: "I don’t have verified offline data for this question.",
-          supportingDetail: "I am trained on specific NUST admission data. Please try rephrasing or check the official NUST website.",
+          supportingDetail: "",
           confidence: "Low",
           source: "NUST Offline Assistant"
         };

@@ -148,7 +148,7 @@ UI Output (Answer + Confidence + Source)
 
 ---
 
-## 🛠️ Tech Stack (Example)
+## 🛠️ Tech Stack 
 
 
 * Data: JSON 

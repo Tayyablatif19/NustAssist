@@ -1,187 +1,67 @@
-# 🎓 NUST Offline Admissions Assistant
+# NUST Admissions Offline Assistant
 
-A **local, offline-capable admissions chatbot** designed to provide reliable answers to university applicants, even without an internet connection.
+A high-precision, offline-first admissions assistant for NUST (National University of Sciences and Technology) Islamabad. This tool provides verified information about eligibility, fees, deadlines, and frequently asked questions (FAQs) based on the official 2025 admission cycle.
 
-Built for performance, trust, and clarity, this system ensures students get **accurate, grounded, and calm guidance** when they need it most.
+## 🚀 Features
 
----
+- **100% Offline Capability**: Works without an internet connection once loaded.
+- **Verified FAQ Dataset**: Contains the official NUST FAQ 2025 with exact answer matching.
+- **Smart Intent Classification**: Understands queries about eligibility, fees, merit calculation, and more.
+- **Privacy Focused**: No user data or queries leave your device.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
 
-## 🚀 Overview
+## 🛠️ Setup and Installation
 
-This application is an **offline admissions assistant** that:
+Follow these steps to run the application on your local machine:
 
-* Works **fully without internet**
-* Provides **accurate answers from a verified local dataset**
-* Automatically **syncs and updates data when internet becomes available**
-* Maintains a **fast, responsive, and minimal interface**
+### Prerequisites
 
-It is designed specifically for **admission queries and FAQs**, helping students navigate eligibility, tests, deadlines, and requirements without confusion.
+- **Node.js**: Version 18.0 or higher. [Download here](https://nodejs.org/)
+- **npm**: Usually comes bundled with Node.js.
 
----
+### 1. Clone the Repository
 
-## ⚙️ Core Features
-
-### 📴 100% Offline Mode
-
-* Runs entirely on local machine
-* No dependency on APIs or cloud services
-* Ensures reliability in low-connectivity environments
-
----
-
-### 🔄 Smart Auto-Update (Online Sync)
-
-* Detects when device reconnects to the internet
-* Fetches latest admissions data from trusted sources
-* Updates local dataset automatically
-* Keeps system **current without compromising offline capability**
-
----
-
-### 🧠 Grounded Answering System
-
-* Answers are retrieved from a **structured local dataset**
-* No hallucinations or guesswork
-* Priority-based matching ensures:
-
-  * Exact FAQ answers are returned as-is
-  * No incorrect keyword-based responses
-
----
-
-### 🎯 Intent-Aware Query Handling
-
-* Understands user intent (e.g., eligibility, deadlines, tests)
-* Matches queries semantically rather than by keywords
-* Reduces incorrect or misleading answers
-
----
-
-### ⚡ Fast Performance
-
-* Optimized for low-resource systems:
-
-  * ≤ 8GB RAM
-  * CPU-only (no GPU required)
-* Response time designed to feel **instant and smooth**
-
----
-
-### 🧘 Calm & Trustworthy UX
-
-* Minimal interface to reduce cognitive load
-* Structured responses:
-
-  * Direct answer
-  * Supporting detail (if applicable)
-  * Confidence indication
-* Honest fallback when data is unavailable
-
----
-
-## 🏗️ System Architecture
-
-```
-User Query
-   ↓
-Intent Classification
-   ↓
-Local Data Retrieval (FAQ / Admissions Data)
-   ↓
-Response Generator (Template-based / Optional Lightweight Model)
-   ↓
-UI Output (Answer + Confidence + Source)
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+cd YOUR_REPO_NAME
 ```
 
----
+### 2. Install Dependencies
 
-## 📂 Data Handling
+Install the required npm packages:
 
-* Stored locally using:
+```bash
+npm install
+```
 
-  * JSON / SQLite
-* Includes:
+### 3. Run the Development Server
 
-  * FAQs
-  * Eligibility criteria
-  * Program details
-  * Test information (NET, SAT, etc.)
-  * Policies and rules
+Start the app in development mode:
 
-### 🔁 Update Flow
+```bash
+npm run dev
+```
 
-1. App runs offline using local dataset
-2. Internet connection detected
-3. Fetch latest data from predefined sources
-4. Validate and update local storage
-5. Continue offline usage with updated data
+The application will be available at `http://localhost:3000`.
 
----
+### 4. Build for Production
 
-## 🛡️ Design Principles
+To create a production-ready build:
 
-* **Accuracy over creativity**
-* **Clarity over complexity**
-* **Trust over impressiveness**
+```bash
+npm run build
+```
 
+The output will be in the `dist/` folder, which can be hosted on any static web server (GitHub Pages, Vercel, Netlify, etc.).
 
+## 📖 Usage
 
----
+Simply type your question in the chat box. The assistant is trained to handle:
+- **Eligibility**: "Can a pre-medical student apply for CS?"
+- **Fees**: "What is the tuition fee for engineering?"
+- **Entry Test**: "Is there negative marking in NET?"
+- **Merit**: "How is the aggregate calculated?"
 
-## 🧪 Example Queries
+## 📄 License
 
-* “What is the minimum percentage required for admission?”
-* “Is there negative marking in NET?”
-* “Can pre-medical students apply for CS?”
-* “When is the last date to apply?”
-
----
-
-## ⚠️ Limitations
-
-* Only answers based on **available local data**
-* Will respond with:
-
-  > “I don’t have verified offline data for this question.”
-  > when unsure
-* Requires internet connection **only for updates**, not for operation
-
----
-
-## 🛠️ Tech Stack 
-
-
-* Data: JSON 
-* Frontend: HTML/CSS/JS (offline-first)
-
----
-
-## 📦 Setup (Basic)
-
-Install Node.js.
-Open a terminal in the project folder.
-Type npm install and then npm run dev.
-
-
----
-
-## 🧩 Future Improvements
-
-* Better semantic search (FAISS)
-* Multi-university support
-* Voice-based interaction (offline)
-* More robust update validation system
-
----
-
-## 🤝 Contribution
-
-This project is designed for experimentation in:
-
-* Offline AI systems
-* Human-centered chatbot design
-* Reliable information retrieval
-
-Feel free to fork, improve, and adapt.
-
-
+This project is for educational purposes. All data is sourced from official NUST publications.

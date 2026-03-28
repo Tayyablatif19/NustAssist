@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Search, Info, ShieldCheck, AlertCircle, Trash2, Send, GraduationCap, MapPin, Calendar, CreditCard, Calculator, Wifi, WifiOff, RefreshCw } from "lucide-react";
+import { Search, Info, Trash2, Send, GraduationCap, Wifi, WifiOff, RefreshCw, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { AssistantLogic, AssistantResponse } from "./lib/assistant_logic";
 import { SyncService, DataUpdate } from "./lib/sync_service";
@@ -28,9 +28,6 @@ export default function App() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncedData, setSyncedData] = useState<DataUpdate | null>(SyncService.getStoredUpdates());
   const [lastSync, setLastSync] = useState<string | null>(syncedData?.timestamp || null);
-  const [calcNet, setCalcNet] = useState<number>(0);
-  const [calcFsc, setCalcFsc] = useState<number>(0);
-  const [calcMatric, setCalcMatric] = useState<number>(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -278,128 +275,6 @@ export default function App() {
           <p className="text-[10px] text-center text-slate-400 mt-3 font-medium uppercase tracking-widest">
             {isOnline ? "Live Sync Active • Updates from nust.edu.pk" : "100% Offline • No Data Leaves This Device"}
           </p>
-        </div>
-      </div>
-
-      {/* Sidebar/Quick Info (Desktop Only) */}
-      <div className="hidden lg:block fixed left-8 top-32 w-64 space-y-4">
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <MapPin size={14} /> Campus Info
-          </h3>
-          <ul className="space-y-3 text-sm font-medium text-slate-600">
-            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> H-12, Islamabad</li>
-            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> Risalpur</li>
-            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div> Quetta</li>
-          </ul>
-        </div>
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <GraduationCap size={14} /> Scholarships
-          </h3>
-          <div className="space-y-3">
-            {syncedData?.scholarships ? (
-              syncedData.scholarships.slice(0, 3).map((s, i) => (
-                <div key={i} className="space-y-1">
-                  <p className="text-xs font-bold text-slate-700">{s.name}</p>
-                  <p className="text-[10px] text-slate-500 line-clamp-2">{s.details}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-xs text-slate-400 italic">Sync to see latest scholarships</p>
-            )}
-          </div>
-        </div>
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <MapPin size={14} /> Campus Life
-          </h3>
-          <div className="space-y-3">
-            {syncedData?.campusLife ? (
-              syncedData.campusLife.slice(0, 3).map((c, i) => (
-                <div key={i} className="space-y-1">
-                  <p className="text-xs font-bold text-slate-700">{c.category}</p>
-                  <p className="text-[10px] text-slate-500 line-clamp-2">{c.description}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-xs text-slate-400 italic">Sync to see campus highlights</p>
-            )}
-          </div>
-        </div>
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <Calculator size={14} /> Merit Calculator
-          </h3>
-          <div className="space-y-3">
-            <div className="space-y-1">
-              <label className="text-[10px] font-bold text-slate-400 uppercase">NET Score (Max 200)</label>
-              <input 
-                type="number" 
-                placeholder="e.g. 150"
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                onChange={(e) => {
-                  const val = parseInt(e.target.value);
-                  if (!isNaN(val)) setCalcNet(val);
-                }}
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="text-[10px] font-bold text-slate-400 uppercase">FSc Marks (Max 1100)</label>
-              <input 
-                type="number" 
-                placeholder="e.g. 980"
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                onChange={(e) => {
-                  const val = parseInt(e.target.value);
-                  if (!isNaN(val)) setCalcFsc(val);
-                }}
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="text-[10px] font-bold text-slate-400 uppercase">Matric Marks (Max 1100)</label>
-              <input 
-                type="number" 
-                placeholder="e.g. 1020"
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                onChange={(e) => {
-                  const val = parseInt(e.target.value);
-                  if (!isNaN(val)) setCalcMatric(val);
-                }}
-              />
-            </div>
-            {calcNet > 0 && calcFsc > 0 && calcMatric > 0 && (
-              <div className="pt-2 mt-2 border-t border-slate-100">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-slate-500">Aggregate:</span>
-                  <span className="text-sm font-bold text-blue-600">
-                    {(((calcNet / 200) * 75) + ((calcFsc / 1100) * 15) + ((calcMatric / 1100) * 10)).toFixed(2)}%
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <Calculator size={14} /> Merit Weightage
-          </h3>
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs font-bold">
-              <span className="text-slate-500">NET</span>
-              <span className="text-blue-600">75%</span>
-            </div>
-            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-blue-600 h-full w-[75%]"></div>
-            </div>
-            <div className="flex justify-between text-xs font-bold pt-1">
-              <span className="text-slate-500">HSSC</span>
-              <span className="text-blue-600">15%</span>
-            </div>
-            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-blue-400 h-full w-[15%]"></div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,5 @@
+{
+  "name": "NUST Offline Admissions Assistant",
+  "description": "A precise, offline-first decision support system for NUST Islamabad admissions.",
+  "requestFramePermissions": []
+}
